@@ -1,14 +1,3 @@
-/**
- * AI Artwork Scoring Service
- * Supports multiple AI APIs for real artwork evaluation
- * 
- * Free API Options:
- * 1. Hugging Face Inference API (RECOMMENDED) - Free tier: 30k requests/month
- * 2. Replicate API - Free tier: Limited requests
- * 3. Stability AI - Free tier: Limited requests
- * 
- * Set in .env: AI_SCORING_PROVIDER=huggingface|replicate|stability|simulated
- */
 
 const AI_PROVIDER = process.env.AI_SCORING_PROVIDER || "simulated";
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
@@ -16,7 +5,7 @@ const REPLICATE_API_KEY = process.env.REPLICATE_API_KEY;
 const STABILITY_API_KEY = process.env.STABILITY_API_KEY;
 
 /**
- * Score an artwork image using real AI APIs
+  * Main function to score artwork using selected AI provider
  * @param {Object} artwork - Artwork object with url, title, description, etc.
  * @returns {Object} Scoring results
  */
@@ -39,16 +28,7 @@ export const scoreArtwork = async (artwork) => {
   }
 };
 
-/**
- * Hugging Face Inference API (RECOMMENDED - FREE)
- * Models to use:
- * - "caidas/swin2SR-classical-sr-x2-64" for image quality
- * - "google/vit-base-patch16-224" for aesthetic analysis
- * - "nlpconnect/vit-gpt2-image-captioning" for understanding
- * 
- * Free tier: 30,000 requests/month
- * Setup: https://huggingface.co/docs/api-inference/index
- */
+
 const scoreWithHuggingFace = async (artwork) => {
   if (!HF_API_KEY) {
     throw new Error("HUGGINGFACE_API_KEY not set in .env");
@@ -56,8 +36,7 @@ const scoreWithHuggingFace = async (artwork) => {
 
   const imageUrl = artwork.url;
 
-  // Use image classification for aesthetic scoring
-  // You can use models like: "google/vit-base-patch16-224"
+  
   const response = await fetch(
     `https://api-inference.huggingface.co/models/google/vit-base-patch16-224`,
     {
@@ -76,8 +55,7 @@ const scoreWithHuggingFace = async (artwork) => {
 
   const result = await response.json();
 
-  // Extract features from HF response and convert to scores
-  // The actual response structure depends on the model used
+  
   const aesthetic = extractScoreFromHF(result, "aesthetic", 70);
   const technical = extractScoreFromHF(result, "technical", 75);
   const creativity = extractScoreFromHF(result, "creativity", 65);
@@ -102,17 +80,13 @@ const scoreWithHuggingFace = async (artwork) => {
   };
 };
 
-/**
- * Replicate API (Alternative free option)
- * Model: "stability-ai/stable-diffusion" or aesthetic models
- * Free tier: Limited requests
- */
+
 const scoreWithReplicate = async (artwork) => {
   if (!REPLICATE_API_KEY) {
     throw new Error("REPLICATE_API_KEY not set in .env");
   }
 
-  // Replicate aesthetic scoring (example)
+  
   const response = await fetch("https://api.replicate.com/v1/predictions", {
     method: "POST",
     headers: {
@@ -126,30 +100,23 @@ const scoreWithReplicate = async (artwork) => {
   });
 
   const result = await response.json();
-  // Process result and return scores
-  // Implementation depends on the model used
+  
+
 
   return normalizeScores(result);
 };
 
-/**
- * Stability AI (Alternative)
- * Free tier: Limited
- */
+
 const scoreWithStability = async (artwork) => {
   if (!STABILITY_API_KEY) {
     throw new Error("STABILITY_API_KEY not set in .env");
   }
 
-  // Stability AI scoring implementation
-  // Similar to above, depends on their API structure
   
   return normalizeScores({});
 };
 
-/**
- * Simulated scoring (fallback when APIs unavailable)
- */
+
 const scoreWithSimulation = async (artwork) => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
@@ -177,9 +144,7 @@ const scoreWithSimulation = async (artwork) => {
   };
 };
 
-/**
- * Extract score from Hugging Face API response
- */
+
 const extractScoreFromHF = (response, type, defaultScore) => {
   // Adapt based on actual HF model response
   // This is a placeholder - adjust based on the model you use

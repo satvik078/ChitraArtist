@@ -18,7 +18,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 text-xl font-bold text-purple-600 hover:text-purple-700 transition-colors">
             <Palette className="w-7 h-7" />
-            <span>Aesthetic Art Club</span>
+            <span>ChitraArtist</span>
           </Link>
 
           {/* Navigation Links */}

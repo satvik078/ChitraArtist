@@ -184,7 +184,7 @@ const PublicPortfolio = () => {
       <div className="bg-gray-100 py-8 mt-12">
         <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
           <p>
-            Powered by <Link to="/" className="text-purple-600 hover:text-purple-700 font-semibold">Aesthetic Art Club</Link>
+            Powered by <Link to="/" className="text-purple-600 hover:text-purple-700 font-semibold">ChitraArtist</Link>
           </p>
           <p className="text-sm mt-2">
             <Link to="/signup" className="hover:text-purple-600">Create your own portfolio</Link>

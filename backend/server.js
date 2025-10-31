@@ -111,7 +111,7 @@ const upload = multer({
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "🎨 Aesthetic Art Club API is running!",
+    message: "🎨 ChitraArtist API is running!",
     version: "2.0.0",
       endpoints: {
       auth: "/api/auth",
@@ -143,7 +143,7 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
 
     // Upload to Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "aesthetic-artclub",
+      folder: "chitraartist",
       transformation: [
         { width: 1500, height: 1500, crop: "limit" }, // Max dimensions
         { quality: "auto" }, // Auto quality optimization

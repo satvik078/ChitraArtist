@@ -31,7 +31,7 @@ const Landing = () => {
             <Palette className="w-16 h-16 text-purple-600" />
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Aesthetic Art Club
+            ChitraArtist
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Your personal art portfolio platform. Create, share, and showcase your artwork with the world. 
