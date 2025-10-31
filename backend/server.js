@@ -27,22 +27,39 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-// Robust CORS setup for dev and common local hosts
+// Robust CORS setup for dev and production
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "https://chitra-artist.vercel.app", // Add Vercel URL directly as fallback
+  "https://chitra-artist.vercel.app/", // With trailing slash
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
     // Allow server-to-server or curl (no origin)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    
+    // Check if origin matches any allowed origin (exact or starts with)
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (typeof allowed === 'string') {
+        return origin === allowed || origin.startsWith(allowed.replace(/\/$/, ''));
+      }
+      return false;
+    });
+    
+    if (isAllowed) {
+      return callback(null, true);
+    }
+    
+    // Log blocked origin for debugging (remove in production if needed)
+    console.log('CORS blocked origin:', origin);
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
