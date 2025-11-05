@@ -1,4 +1,4 @@
-import PortfolioPageV2 from '../components/v2/PortfolioPage';
+import PortfolioPageV2 from '../Components/v2/PortfolioPage';
 
 const PublicPortfolio = () => <PortfolioPageV2 />;
 
