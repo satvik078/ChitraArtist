@@ -1,5 +1,5 @@
-import PortfolioPageV2 from '../Components/v2/PortfolioPage';
+import ArtistPortfolio from './ArtistPortfolio';
 
-const PublicPortfolio = () => <PortfolioPageV2 />;
+const PublicPortfolio = () => <ArtistPortfolio />;
 
 export default PublicPortfolio;
