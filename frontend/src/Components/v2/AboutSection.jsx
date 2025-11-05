@@ -1,27 +1,21 @@
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
 
-const colors = {
-  background: '#0A0A0A',
-  textPrimary: '#F5F5F0',
-  accent: '#E6C989',
-};
-
 export default function AboutSection({ artist }) {
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: true,
   });
 
-  const displayName = artist?.displayName || 'Artist';
-  const bio = artist?.bio || 'An independent artist exploring visuals and narrative through color, form and light.';
+  const displayName = artist?.displayName || artist?.name || 'Artist';
+  const bio = artist?.bio || `I am ${displayName}, a lifelong devotee of Shri Krishna and a passionate artist exploring the divine through my creations.`;
   const education = artist?.education || 'Self-taught Artist';
   const medium = artist?.medium || 'Digital & Traditional Media';
-  const aboutImage = artist?.profileImage || null;
+  const aboutImage = artist?.profileImage || artist?.portrait || null;
 
   return (
-    <section id="about" ref={ref} className="py-20 md:py-32 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" ref={ref} className="py-20 md:py-32 w-full px-4 bg-[#0A0A0A]">
+      <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image */}
           <motion.div
@@ -41,8 +35,8 @@ export default function AboutSection({ artist }) {
               </div>
             ) : (
               <div 
-                className="aspect-[4/3] rounded-lg flex items-center justify-center text-6xl font-bold"
-                style={{ background: '#1a1a1a', color: colors.accent, fontFamily: 'Playfair Display, serif' }}
+                className="aspect-[4/3] rounded-lg flex items-center justify-center text-6xl font-bold bg-[#1a1a1a]"
+                style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
               >
                 {displayName[0]?.toUpperCase() || 'A'}
               </div>
@@ -57,21 +51,21 @@ export default function AboutSection({ artist }) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h2
-              className="text-4xl md:text-5xl font-bold mb-6"
-              style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
+              className="text-4xl md:text-5xl font-bold mb-6 text-[#F8F7F3]"
+              style={{ fontFamily: 'Playfair Display, serif' }}
             >
               About {displayName}
             </h2>
-            <div className="space-y-4" style={{ color: colors.textPrimary, fontFamily: 'Inter, sans-serif' }}>
+            <div className="space-y-4 text-[#F8F7F3]" style={{ fontFamily: 'Inter, sans-serif' }}>
               <p className="text-lg leading-relaxed opacity-90">
                 {bio}
               </p>
               <div className="space-y-2 pt-4">
                 <p className="opacity-80">
-                  <span style={{ color: colors.accent }}>Education:</span> {education}
+                  <span className="text-[#E6C989] font-semibold">Medium:</span> {medium}
                 </p>
                 <p className="opacity-80">
-                  <span style={{ color: colors.accent }}>Medium:</span> {medium}
+                  <span className="text-[#E6C989] font-semibold">Education:</span> {education}
                 </p>
               </div>
             </div>
@@ -81,4 +75,3 @@ export default function AboutSection({ artist }) {
     </section>
   );
 }
-

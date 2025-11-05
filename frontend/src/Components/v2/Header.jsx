@@ -1,36 +1,40 @@
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const colors = {
-  background: '#0A0A0A',
-  textPrimary: '#F5F5F0',
-  accent: '#E6C989',
-};
 
 export default function Header({ onMenuClick, isMenuOpen }) {
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between"
-      style={{ background: 'rgba(10, 10, 10, 0.8)', backdropFilter: 'blur(10px)' }}
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between bg-[#0A0A0A]"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Logo */}
+      {/* Logo - Left */}
+      <Link to="/" className="flex items-center">
+        <motion.div
+          className="text-xl font-bold text-purple-600 hover:text-purple-700 transition-colors"
+          whileHover={{ scale: 1.05 }}
+        >
+          ChitraArtist
+        </motion.div>
+      </Link>
+
+      {/* Art Gallery - Center */}
       <motion.div
-        className="text-xl font-bold"
-        style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
-        whileHover={{ scale: 1.05 }}
+        className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold uppercase tracking-wider hidden md:block"
+        style={{ fontFamily: 'Playfair Display, serif', color: '#F8F7F3' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
       >
-        ChitraArtist
+        ART GALLERY
       </motion.div>
 
-      {/* Hamburger Menu */}
+      {/* Hamburger Menu - Right */}
       <button
         onClick={onMenuClick}
-        className="p-2"
-        style={{ color: colors.textPrimary }}
+        className="p-2 text-[#F8F7F3] hover:opacity-70 transition-opacity"
         aria-label="Toggle menu"
       >
         <AnimatePresence mode="wait">
@@ -60,4 +64,3 @@ export default function Header({ onMenuClick, isMenuOpen }) {
     </motion.header>
   );
 }
-

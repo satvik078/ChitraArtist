@@ -2,12 +2,6 @@ import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
-const colors = {
-  background: '#0A0A0A',
-  textPrimary: '#F5F5F0',
-  accent: '#E6C989',
-};
-
 export default function GallerySection({ artworks }) {
   const [ref, inView] = useInView({
     threshold: 0.1,
@@ -22,7 +16,7 @@ export default function GallerySection({ artworks }) {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
-  // Update index based on scroll progress (primary method)
+  // Update index based on scroll progress
   useEffect(() => {
     if (artworks.length === 0) return;
 
@@ -41,9 +35,9 @@ export default function GallerySection({ artworks }) {
 
   if (artworks.length === 0) {
     return (
-      <section id="gallery" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <p style={{ color: colors.textPrimary, fontFamily: 'Inter, sans-serif', opacity: 0.7 }}>
+      <section id="gallery" className="py-20 px-4 bg-[#0A0A0A]">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-[#F8F7F3] opacity-70" style={{ fontFamily: 'Inter, sans-serif' }}>
             No artworks yet. Check back soon!
           </p>
         </div>
@@ -52,14 +46,14 @@ export default function GallerySection({ artworks }) {
   }
 
   return (
-    <section id="gallery" ref={ref} className="py-20 md:py-32 px-4 relative">
+    <section id="gallery" ref={ref} className="py-20 md:py-32 w-full px-4 relative bg-[#0A0A0A]">
       <motion.div
-        className="max-w-6xl mx-auto"
+        className="max-w-7xl mx-auto"
         style={{ opacity }}
       >
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-12 text-center"
-          style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
+          className="text-4xl md:text-5xl font-bold mb-12 text-center text-[#F8F7F3]"
+          style={{ fontFamily: 'Playfair Display, serif' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -69,7 +63,7 @@ export default function GallerySection({ artworks }) {
         </motion.h2>
 
         {/* Slideshow Container */}
-        <div className="relative aspect-[4/3] md:aspect-[16/9] max-w-5xl mx-auto">
+        <div className="relative aspect-[4/3] md:aspect-[16/9] max-w-5xl mx-auto mb-8">
           <AnimatePresence mode="wait">
             {artworks.map((artwork, index) => {
               if (index !== activeIndex) return null;
@@ -78,12 +72,12 @@ export default function GallerySection({ artworks }) {
                 <motion.div
                   key={artwork._id || index}
                   className="absolute inset-0 rounded-lg overflow-hidden bg-[#1a1a1a] group cursor-pointer"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 0.6, ease: 'easeInOut' }}
                   whileHover={{ scale: 1.05 }}
-                  style={{ transition: 'transform 0.3s ease' }}
+                  style={{ transition: 'transform 0.3s ease-in-out' }}
                 >
                   <img
                     src={artwork.url}
@@ -92,16 +86,6 @@ export default function GallerySection({ artworks }) {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {artwork.title && (
-                      <p
-                        className="text-lg font-semibold"
-                        style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
-                      >
-                        {artwork.title}
-                      </p>
-                    )}
-                  </div>
                 </motion.div>
               );
             })}
@@ -118,7 +102,7 @@ export default function GallerySection({ artworks }) {
                     index === activeIndex ? 'opacity-100' : 'opacity-40'
                   }`}
                   style={{
-                    background: index === activeIndex ? colors.accent : colors.textPrimary,
+                    background: index === activeIndex ? '#E6C989' : '#F8F7F3',
                   }}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -126,8 +110,42 @@ export default function GallerySection({ artworks }) {
             </div>
           )}
         </div>
+
+        {/* Artwork Info Below Image */}
+        <AnimatePresence mode="wait">
+          {artworks.map((artwork, index) => {
+            if (index !== activeIndex) return null;
+
+            return (
+              <motion.div
+                key={`info-${artwork._id || index}`}
+                className="max-w-5xl mx-auto text-center px-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                {artwork.title && (
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-3 text-[#F8F7F3]"
+                    style={{ fontFamily: 'Playfair Display, serif' }}
+                  >
+                    {artwork.title}
+                  </h3>
+                )}
+                {artwork.description && (
+                  <p
+                    className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto text-[#F8F7F3] opacity-85"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    {artwork.description}
+                  </p>
+                )}
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </motion.div>
     </section>
   );
 }
-

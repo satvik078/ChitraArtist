@@ -1,12 +1,6 @@
 import { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-
-const colors = {
-  background: '#0A0A0A',
-  textPrimary: '#F5F5F0',
-  accent: '#E6C989',
-};
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function NavOverlay({ isOpen, onClose }) {
   useEffect(() => {
@@ -24,11 +18,26 @@ export default function NavOverlay({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   const navLinks = [
-    { to: '#home', label: 'Home' },
-    { to: '#about', label: 'About' },
-    { to: '#gallery', label: 'Gallery' },
-    { to: '#contact', label: 'Contact' },
+    { to: '/', label: 'Home', isRoute: true },
+    { to: '#about', label: 'About', isRoute: false },
+    { to: '#gallery', label: 'Gallery', isRoute: false },
+    { to: '/competition', label: 'Competition', isRoute: true },
+    { to: '#contact', label: 'Contact', isRoute: false },
+    { to: '/login', label: 'Login', isRoute: true },
+    { to: '/signup', label: 'Signup', isRoute: true },
   ];
+
+  const handleLinkClick = (link, isRoute) => {
+    if (!isRoute) {
+      const el = document.querySelector(link);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        onClose();
+      }
+    } else {
+      onClose();
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -36,8 +45,7 @@ export default function NavOverlay({ isOpen, onClose }) {
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 z-[60]"
-            style={{ background: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(8px)' }}
+            className="fixed inset-0 z-[60] backdrop-blur-md bg-black/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -46,8 +54,7 @@ export default function NavOverlay({ isOpen, onClose }) {
 
           {/* Overlay Panel */}
           <motion.nav
-            className="fixed left-0 top-0 bottom-0 w-80 z-[70] px-8 py-20"
-            style={{ background: 'rgba(10, 10, 10, 0.95)', backdropFilter: 'blur(20px)' }}
+            className="fixed left-0 top-0 bottom-0 w-80 z-[70] px-8 py-20 bg-[#0A0A0A]"
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
@@ -61,19 +68,28 @@ export default function NavOverlay({ isOpen, onClose }) {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <a
-                    href={link.to}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.querySelector(link.to);
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      onClose();
-                    }}
-                    className="block text-2xl font-medium transition-colors hover:opacity-70"
-                    style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
-                  >
-                    {link.label}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.to}
+                      onClick={() => handleLinkClick(link.to, true)}
+                      className="block text-[1.75rem] font-medium transition-opacity hover:opacity-70"
+                      style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.to}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLinkClick(link.to, false);
+                      }}
+                      className="block text-[1.75rem] font-medium transition-opacity hover:opacity-70"
+                      style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </motion.li>
               ))}
             </ul>
@@ -83,4 +99,3 @@ export default function NavOverlay({ isOpen, onClose }) {
     </AnimatePresence>
   );
 }
-

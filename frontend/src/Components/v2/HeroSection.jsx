@@ -1,31 +1,25 @@
 import { motion } from 'framer-motion';
 
-const colors = {
-  background: '#0A0A0A',
-  textPrimary: '#F5F5F0',
-  accent: '#E6C989',
-};
-
 export default function HeroSection({ artist }) {
-  const displayName = artist?.displayName || 'Artist';
-  const designation = artist?.bio 
+  const displayName = artist?.displayName || artist?.name || 'Artist';
+  const designation = artist?.designation || artist?.bio 
     ? artist.bio.split('.')[0] + '.' 
     : 'Visual Artist & Storyteller';
-  const portrait = artist?.profileImage || null;
+  const portrait = artist?.profileImage || artist?.portrait || null;
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-20">
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Portrait */}
+    <section className="min-h-screen flex items-center justify-center w-full pt-20 px-4 bg-[#0A0A0A]">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
+          {/* Artist Portrait */}
           <motion.div
             className="order-2 md:order-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {portrait ? (
-              <div className="aspect-square rounded-lg overflow-hidden bg-[#1a1a1a]">
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-lg overflow-hidden bg-[#1a1a1a]">
                 <img
                   src={portrait}
                   alt={displayName}
@@ -35,8 +29,8 @@ export default function HeroSection({ artist }) {
               </div>
             ) : (
               <div 
-                className="aspect-square rounded-lg flex items-center justify-center text-8xl font-bold"
-                style={{ background: '#1a1a1a', color: colors.accent, fontFamily: 'Playfair Display, serif' }}
+                className="w-64 h-64 md:w-80 md:h-80 rounded-lg flex items-center justify-center text-8xl font-bold bg-[#1a1a1a]"
+                style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
               >
                 {displayName[0]?.toUpperCase() || 'A'}
               </div>
@@ -46,13 +40,13 @@ export default function HeroSection({ artist }) {
           {/* Name & Designation */}
           <motion.div
             className="order-1 md:order-2 text-center md:text-left"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             <motion.h1
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4"
-              style={{ color: colors.textPrimary, fontFamily: 'Playfair Display, serif' }}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 text-[#F8F7F3]"
+              style={{ fontFamily: 'Playfair Display, serif' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -60,8 +54,8 @@ export default function HeroSection({ artist }) {
               {displayName}
             </motion.h1>
             <motion.p
-              className="text-xl md:text-2xl"
-              style={{ color: colors.accent, fontFamily: 'Inter, sans-serif' }}
+              className="text-xl md:text-2xl text-[#E6C989]"
+              style={{ fontFamily: 'Inter, sans-serif' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
@@ -69,8 +63,7 @@ export default function HeroSection({ artist }) {
               {designation}
             </motion.p>
             <motion.div
-              className="h-1 w-32 mt-6 rounded"
-              style={{ background: `linear-gradient(90deg, ${colors.accent} 0%, transparent 100%)` }}
+              className="h-1 w-32 mt-6 rounded bg-gradient-to-r from-[#E6C989] to-transparent mx-auto md:mx-0"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -81,4 +74,3 @@ export default function HeroSection({ artist }) {
     </section>
   );
 }
-
