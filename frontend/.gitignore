@@ -28,7 +28,3 @@ dist-ssr
 *.sln
 *.sw?
 favicon logo
-service-worker.js
-*.keystore
-*.jks
-build/
