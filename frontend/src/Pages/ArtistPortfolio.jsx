@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { artistAPI } from '../utils/api';
-import Header from '../components/v2/Header';
-import NavOverlay from '../components/v2/NavOverlay';
-import HeroSection from '../components/v2/HeroSection';
-import AboutSection from '../components/v2/AboutSection';
-import GallerySection from '../components/v2/GallerySection';
-import RotatingPalette from '../components/v2/RotatingPalette';
-import Footer from '../components/v2/Footer';
+import Header from '../Components/v2/Header';
+import NavOverlay from '../Components/v2/NavOverlay';
+import HeroSection from '../Components/v2/HeroSection';
+import AboutSection from '../Components/v2/AboutSection';
+import GallerySection from '../Components/v2/GallerySection';
+import RotatingPalette from '../Components/v2/RotatingPalette';
+import Footer from '../Components/v2/Footer';
 
 export default function ArtistPortfolio() {
   const { username } = useParams();
