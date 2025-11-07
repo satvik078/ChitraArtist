@@ -1,0 +1,131 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export default function NavOverlay({ isOpen, onClose }) {
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  const navLinks = [
+    { to: '/', label: 'Home', isRoute: true },
+    { to: '#about', label: 'About', isRoute: false },
+    { to: '#gallery', label: 'Gallery', isRoute: false },
+    { to: '/competition', label: 'Competition', isRoute: true },
+    { to: '#contact', label: 'Contact', isRoute: false },
+    { to: '/login', label: 'Login', isRoute: true },
+    { to: '/signup', label: 'Signup', isRoute: true },
+  ];
+
+  const handleLinkClick = (link, isRoute) => {
+    if (!isRoute) {
+      const el = document.querySelector(link);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        onClose();
+      }
+    } else {
+      onClose();
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed inset-0 z-[60] backdrop-blur-md bg-black/70"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+
+          {/* Overlay Panel - Slides from Right */}
+          <motion.nav
+            className="fixed right-0 top-0 bottom-0 w-auto min-w-[280px] z-[70] px-10 py-20 bg-[#0A0A0A] border-l-2 border-[#E6C989]/30 shadow-2xl"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+          >
+            <ul className="space-y-8">
+              {navLinks.map((link, idx) => (
+                <motion.li
+                  key={link.to}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  {link.isRoute ? (
+                    <Link
+                      to={link.to}
+                      onClick={() => handleLinkClick(link.to, true)}
+                      className="block text-[1.5rem] font-semibold italic relative group"
+                      style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
+                    >
+                      <motion.span
+                        className="inline-block"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          x: 10,
+                          transition: { type: 'spring', stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                      <motion.span
+                        className="absolute left-0 bottom-0 h-[2px] bg-[#E6C989]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.to}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLinkClick(link.to, false);
+                      }}
+                      className="block text-[1.5rem] font-semibold italic relative group"
+                      style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
+                    >
+                      <motion.span
+                        className="inline-block"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          x: 10,
+                          transition: { type: 'spring', stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                      <motion.span
+                        className="absolute left-0 bottom-0 h-[2px] bg-[#E6C989]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                  )}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.nav>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
