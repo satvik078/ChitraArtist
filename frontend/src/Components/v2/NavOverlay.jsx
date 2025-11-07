@@ -52,19 +52,19 @@ export default function NavOverlay({ isOpen, onClose }) {
             onClick={onClose}
           />
 
-          {/* Overlay Panel */}
+          {/* Overlay Panel - Slides from Right */}
           <motion.nav
-            className="fixed left-0 top-0 bottom-0 w-80 z-[70] px-8 py-20 bg-[#0A0A0A]"
-            initial={{ x: '-100%' }}
+            className="fixed right-0 top-0 bottom-0 w-auto min-w-[280px] z-[70] px-10 py-20 bg-[#0A0A0A] border-l-2 border-[#E6C989]/30 shadow-2xl"
+            initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
+            exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           >
-            <ul className="space-y-6">
+            <ul className="space-y-8">
               {navLinks.map((link, idx) => (
                 <motion.li
                   key={link.to}
-                  initial={{ x: -50, opacity: 0 }}
+                  initial={{ x: 50, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: idx * 0.1 }}
                 >
@@ -72,10 +72,25 @@ export default function NavOverlay({ isOpen, onClose }) {
                     <Link
                       to={link.to}
                       onClick={() => handleLinkClick(link.to, true)}
-                      className="block text-[1.75rem] font-medium transition-opacity hover:opacity-70"
+                      className="block text-[1.5rem] font-semibold italic relative group"
                       style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
                     >
-                      {link.label}
+                      <motion.span
+                        className="inline-block"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          x: 10,
+                          transition: { type: 'spring', stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                      <motion.span
+                        className="absolute left-0 bottom-0 h-[2px] bg-[#E6C989]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
                     </Link>
                   ) : (
                     <a
@@ -84,10 +99,25 @@ export default function NavOverlay({ isOpen, onClose }) {
                         e.preventDefault();
                         handleLinkClick(link.to, false);
                       }}
-                      className="block text-[1.75rem] font-medium transition-opacity hover:opacity-70"
+                      className="block text-[1.5rem] font-semibold italic relative group"
                       style={{ fontFamily: 'Playfair Display, serif', color: '#E6C989' }}
                     >
-                      {link.label}
+                      <motion.span
+                        className="inline-block"
+                        whileHover={{ 
+                          scale: 1.1, 
+                          x: 10,
+                          transition: { type: 'spring', stiffness: 400, damping: 10 }
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                      <motion.span
+                        className="absolute left-0 bottom-0 h-[2px] bg-[#E6C989]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
                     </a>
                   )}
                 </motion.li>

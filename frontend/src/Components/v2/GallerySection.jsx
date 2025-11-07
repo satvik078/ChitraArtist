@@ -52,8 +52,8 @@ export default function GallerySection({ artworks }) {
         style={{ opacity }}
       >
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-12 text-center text-[#F8F7F3]"
-          style={{ fontFamily: 'Playfair Display, serif' }}
+          className="text-4xl md:text-5xl font-bold mb-12 text-center text-[#F8F7F3] italic"
+          style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.01em' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -127,16 +127,16 @@ export default function GallerySection({ artworks }) {
               >
                 {artwork.title && (
                   <h3
-                    className="text-2xl md:text-3xl font-bold mb-3 text-[#F8F7F3]"
-                    style={{ fontFamily: 'Playfair Display, serif' }}
+                    className="text-2xl md:text-3xl font-bold mb-3 text-[#F8F7F3] italic"
+                    style={{ fontFamily: 'Cinzel, serif', letterSpacing: '0.01em' }}
                   >
                     {artwork.title}
                   </h3>
                 )}
                 {artwork.description && (
                   <p
-                    className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto text-[#F8F7F3] opacity-85"
-                    style={{ fontFamily: 'Inter, sans-serif' }}
+                    className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto text-[#F8F7F3] opacity-85 italic"
+                    style={{ fontFamily: 'EB Garamond, serif' }}
                   >
                     {artwork.description}
                   </p>

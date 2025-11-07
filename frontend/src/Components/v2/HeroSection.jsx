@@ -46,7 +46,7 @@ export default function HeroSection({ artist }) {
           >
             <motion.h1
               className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 text-[#F8F7F3]"
-              style={{ fontFamily: 'Playfair Display, serif' }}
+              style={{ fontFamily: 'Cinzel, serif', letterSpacing: '0.02em' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -54,8 +54,8 @@ export default function HeroSection({ artist }) {
               {displayName}
             </motion.h1>
             <motion.p
-              className="text-xl md:text-2xl text-[#E6C989]"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="text-xl md:text-2xl text-[#E6C989] italic"
+              style={{ fontFamily: 'EB Garamond, serif' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}

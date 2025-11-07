@@ -52,11 +52,13 @@ export default function PortfolioPageV2() {
   // Map artist data to match expected format
   const artistData = artist ? {
     name: artist.displayName,
+    displayName: artist.displayName,
     designation: artist.bio ? artist.bio.split('.')[0] + '.' : 'Visual Artist',
     bio: artist.bio || '',
     education: artist.education || 'Self-taught Artist',
     medium: artist.medium || 'Digital & Traditional Media',
     portrait: artist.profileImage,
+    profileImage: artist.profileImage,
     socialLinks: artist.socialLinks,
   } : null;
 
@@ -85,7 +87,7 @@ export default function PortfolioPageV2() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background }}>
+    <div className="min-h-screen w-full overflow-x-hidden" style={{ background: colors.background }}>
       {/* Persistent Header */}
       <Header onMenuClick={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
 

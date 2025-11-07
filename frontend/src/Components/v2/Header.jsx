@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '../Logo';
 
 export default function Header({ onMenuClick, isMenuOpen }) {
   return (
@@ -11,19 +11,16 @@ export default function Header({ onMenuClick, isMenuOpen }) {
       transition={{ duration: 0.6 }}
     >
       {/* Logo - Left */}
-      <Link to="/" className="flex items-center">
-        <motion.div
-          className="text-xl font-bold text-purple-600 hover:text-purple-700 transition-colors"
-          whileHover={{ scale: 1.05 }}
-        >
-          ChitraArtist
-        </motion.div>
-      </Link>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+      >
+        <Logo className="text-xl" iconSize="w-6 h-6" textSize="text-xl" />
+      </motion.div>
 
       {/* Art Gallery - Center */}
       <motion.div
         className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold uppercase tracking-wider hidden md:block"
-        style={{ fontFamily: 'Playfair Display, serif', color: '#F8F7F3' }}
+        style={{ fontFamily: 'Cinzel, serif', color: '#F8F7F3', letterSpacing: '0.15em' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}

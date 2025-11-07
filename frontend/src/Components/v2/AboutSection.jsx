@@ -51,21 +51,21 @@ export default function AboutSection({ artist }) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h2
-              className="text-4xl md:text-5xl font-bold mb-6 text-[#F8F7F3]"
-              style={{ fontFamily: 'Playfair Display, serif' }}
+              className="text-4xl md:text-5xl font-bold mb-6 text-[#F8F7F3] italic"
+              style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.01em' }}
             >
               About {displayName}
             </h2>
-            <div className="space-y-4 text-[#F8F7F3]" style={{ fontFamily: 'Inter, sans-serif' }}>
-              <p className="text-lg leading-relaxed opacity-90">
+            <div className="space-y-4 text-[#F8F7F3]" style={{ fontFamily: 'EB Garamond, serif' }}>
+              <p className="text-lg md:text-xl leading-relaxed opacity-90 italic">
                 {bio}
               </p>
               <div className="space-y-2 pt-4">
-                <p className="opacity-80">
-                  <span className="text-[#E6C989] font-semibold">Medium:</span> {medium}
+                <p className="opacity-80 text-base md:text-lg">
+                  <span className="text-[#E6C989] font-semibold not-italic">Medium:</span> <span className="italic">{medium}</span>
                 </p>
-                <p className="opacity-80">
-                  <span className="text-[#E6C989] font-semibold">Education:</span> {education}
+                <p className="opacity-80 text-base md:text-lg">
+                  <span className="text-[#E6C989] font-semibold not-italic">Education:</span> <span className="italic">{education}</span>
                 </p>
               </div>
             </div>

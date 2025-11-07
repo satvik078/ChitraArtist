@@ -6,6 +6,7 @@ import NavOverlay from '../components/v2/NavOverlay';
 import HeroSection from '../components/v2/HeroSection';
 import AboutSection from '../components/v2/AboutSection';
 import GallerySection from '../components/v2/GallerySection';
+import RotatingPalette from '../components/v2/RotatingPalette';
 import Footer from '../components/v2/Footer';
 
 export default function ArtistPortfolio() {
@@ -96,6 +97,9 @@ export default function ArtistPortfolio() {
 
       {/* Gallery Section */}
       <GallerySection artworks={artworks} />
+
+      {/* Rotating Palette Icon */}
+      <RotatingPalette />
 
       {/* Footer */}
       <Footer artist={artistData} />
